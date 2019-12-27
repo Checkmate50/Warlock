@@ -135,7 +135,7 @@ MonoBehaviour:
   maxHealth: 2
   baseSpeed: 1
   moveTime: 0
-  attackTime: 100
+  attackTime: 1000
   restTime: 0
   aggroRadius: 10
   projectile: {fileID: 4439601716998303368, guid: ef3c92df8eb39bf4998d2e69c8329140,

@@ -27,6 +27,8 @@ public sealed class GameController : MonoBehaviour
     }
 
     private void Start() {
+        // Application.targetFrameRate = 60;
+        // QualitySettings.vSyncCount = 0;
         players = new List<GameObject>();
         enemies = new List<GameObject>();
 

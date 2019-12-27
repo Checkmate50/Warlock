@@ -64,7 +64,6 @@ public abstract class Character : MovableObject
     }
 
     protected virtual void createProjectile(Projectile proj, Vector2 direction, float forOffset, float horOffset) {
-        Vector2 dir = new Vector2(direction.y, direction.x);
         Projectile result = Instantiate(proj, transform.position, Quaternion.LookRotation(Vector3.forward, direction.normalized));
         result.initialize(gameController, this, forOffset, horOffset);
     }
