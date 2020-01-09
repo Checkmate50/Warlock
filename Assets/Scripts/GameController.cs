@@ -54,6 +54,17 @@ public sealed class GameController : MonoBehaviour
         }
     }
 
+    private void OnGUI()
+    {
+        int i = 0;
+        foreach (GameObject o in players)
+        {
+            Player p = o.GetComponent<Player>();
+            GUI.Label(new Rect(10, i++ * 30 + 10, 100, 20), "Health: " + p.Health);
+        }
+            
+    }
+
     private void createInitialSpawners() {
         PlayerSpawner psIns = Instantiate(playerSpawner);
         psIns.initialize(this);

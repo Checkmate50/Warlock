@@ -14,20 +14,20 @@ public abstract class Enemy : Character
     protected float aggroRadius;
 
     protected float aggroRadiusSquared; 
-    private int attackCD = 0;
-    private int attackAnimCD = 0;
-    private int restCD = 0;
+    protected int attackCD = 0;
+    protected int attackAnimCD = 0;
+    protected int restCD = 0;
     protected Character target = null;
     protected Vector3 movement = Vector3.zero;
 
-    private enum State { IDLE, MOVE, ATTACK, REST };
-    private State curState;
+    protected enum State { IDLE, MOVE, ATTACK, REST };
+    protected State curState;
 
     protected abstract void move();
     protected abstract void attack();
     protected virtual void prepAttack() { }
-    protected virtual void startMove() { }
-    protected virtual void startAttack() { }
+    protected virtual void startMove() { restartMoving(); }
+    protected virtual void startAttack() { stopMoving(); }
 
     protected override void Start() {
         base.Start();
@@ -36,6 +36,7 @@ public abstract class Enemy : Character
 
     protected override void Update() {
         base.Update();
+        Debug.Log(attackCD);
         if (curState == State.IDLE)
             checkTarget();
         if (curState == State.MOVE)
@@ -44,6 +45,16 @@ public abstract class Enemy : Character
             checkAttack();
         if (curState == State.REST)
             checkRest();
+    }
+
+    protected void restartMoving()
+    {
+        speed = baseSpeed;
+    }
+
+    protected void stopMoving()
+    {
+        speed = 0;
     }
 
     protected void checkTarget() {
@@ -64,10 +75,9 @@ public abstract class Enemy : Character
             attackAnimCD = attackTime;
             curState = State.ATTACK;
             startAttack();
-            moveDir = Vector3.zero;
         } else {
-            move();
             attackCD -= 1;
+            move();
         }
         
     }
@@ -78,8 +88,8 @@ public abstract class Enemy : Character
             restCD = restTime;
             curState = State.REST;
         } else {
-            prepAttack();
             attackAnimCD -= 1;
+            prepAttack();
         }
     }
 

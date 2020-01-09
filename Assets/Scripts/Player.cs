@@ -103,9 +103,9 @@ public class Player : Character
         curr_accel += input_a - (input_accel/max_accel)*curr_accel;
         curr_vel += curr_accel*Time.deltaTime - mu1*curr_vel;
         transform.position += (Vector3) curr_vel * Time.deltaTime;
-        Debug.Log("curr_accel = " + curr_accel.ToString());
-        Debug.Log("cur_vel = " + curr_vel.ToString());
-        Debug.Log("framerate = " + Application.targetFrameRate.ToString());
+        // Debug.Log("curr_accel = " + curr_accel.ToString());
+        // Debug.Log("cur_vel = " + curr_vel.ToString());
+        // Debug.Log("framerate = " + Application.targetFrameRate.ToString());
     }
 
     private void updateCooldowns() {

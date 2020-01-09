@@ -10,24 +10,20 @@ public abstract class Util
     }
     // Given a direction towards the target, the direction the target is moving, and the speed of the object and target
     // Returns the direction the object should travel to intercept the target
-    public static Vector2 CalcInterceptDir(Vector2 current, Vector2 targetMove, float targetSpeed, float objSpeed) {
-        if (targetSpeed == 0 || objSpeed == 0) {
+    public static Vector2 CalcInterceptDir(Vector2 current, Vector2 targetMove, float targetSpeed, float projSpeed) {
+        if (targetSpeed == 0 || projSpeed == 0) {
             Debug.LogError("Invalid speed for interception, cannot be 0");
             return Vector2.zero;
         }
-        float angle = Vector2.Dot(current / objSpeed, targetMove / targetSpeed);
-        //Debug.Log(angle);
-        //Debug.Log(curDir);
-        Debug.Log(targetMove);
-        Debug.Log(objSpeed);
-        Debug.Log(targetSpeed);
-        Debug.Log(current);
-        if (Mathf.Abs(angle) > .995f)
-            return current;
-        float D = targetSpeed / objSpeed * Mathf.Sin(angle);
+        float angle = Mathf.Acos(Vector2.Dot(current, targetMove)
+             / (current.magnitude * targetMove.magnitude));
+        float D = targetSpeed / projSpeed * Mathf.Sin(angle);
+        // No solution, so we give up
         if (D > .995f)
-            return -(Quaternion.Euler(0, 0, 90 - angle) * current);
-        Debug.Log(D);
-        return -(Quaternion.Euler(0, 0, 180 - angle - Mathf.Asin(D)) * current);
+            return current;
+        float dAngle = Mathf.Asin(D) * 180 / Mathf.PI;
+        if (Vector3.Cross(current, targetMove).z >= 0f)
+            return Quaternion.Euler(0, 0, dAngle) * current;
+        return -(Quaternion.Euler(0, 0, 180 - dAngle) * current);
     }
 }

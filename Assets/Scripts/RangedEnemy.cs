@@ -10,7 +10,8 @@ public class RangedEnemy : Enemy
     protected float closeDistance;
     private float closeDistanceSquared;
 
-    private Vector2 targetAccumulatedTransform;
+    private Vector2 targetTransform;
+    private Vector2 targetPrevTransform;
 
     protected override void Start() {
         base.Start();
@@ -25,16 +26,23 @@ public class RangedEnemy : Enemy
     }
     protected override void startAttack() {
         base.startAttack();
-        targetAccumulatedTransform = Vector2.zero;
+        targetTransform = Vector2.zero;
+        targetPrevTransform = target.transform.position;
     }
     protected override void prepAttack() {
-        targetAccumulatedTransform += target.getVelocity();
+        targetTransform += (Vector2) target.transform.position - targetPrevTransform;
+        targetPrevTransform = target.transform.position;
     }
     protected override void attack() {
-        Vector3 targetTransform = targetAccumulatedTransform / attackTime;
+        // Magic variable to control how much the attacker leads the player, lower is more
+        float leading = 50f;
+        // Note that we don't account for attackTime since our weighting mostly clears it
+        float foundSpeed = targetTransform.magnitude * leading / attackTime;
         Vector2 dir = target.transform.position - transform.position;
-        if (targetTransform.magnitude > .1f)
-            dir = Util.CalcInterceptDir(dir, targetTransform, target.Speed, projectile.MaxSpeed);
+        // If the player moved for over 2/3 the prepping time, lead the player
+        if (foundSpeed > target.Speed * 2f / 3f)
+            dir = Util.CalcInterceptDir(dir, targetTransform, 
+                foundSpeed, projectile.MaxSpeed);
         createProjectile(projectile, dir, 0f, 0f);
     }
 }

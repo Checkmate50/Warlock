@@ -7,6 +7,8 @@ public class EnemySpawner : Spawner
     [SerializeField]
     protected Enemy kobold;
     [SerializeField]
+    protected Enemy warrior;
+    [SerializeField]
     protected int spawnTimer;
 
     int spawnCD;
@@ -21,6 +23,7 @@ public class EnemySpawner : Spawner
         spawnCD -= 1;
         if (spawnCD <= 0) {
             spawnEnemy(kobold, Random.insideUnitCircle.normalized * Random.Range(1.0f, 5.0f));
+            spawnEnemy(warrior, Random.insideUnitCircle.normalized * Random.Range(1.0f, 5.0f));
             spawnCD = spawnTimer;
         }
     }

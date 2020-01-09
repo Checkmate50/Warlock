@@ -42,7 +42,7 @@ public abstract class Character : MovableObject
 
     // Note that negative damage is the same as healing
     // Returns true if this character was destroyed
-    public bool damage(int amount) {
+    public bool applyDamage(int amount) {
         health -= amount;
         if (health > maxHealth)
             health = maxHealth;

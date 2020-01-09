@@ -44,4 +44,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kobold: {fileID: 925668005052593806, guid: 99f2fa259162e3f4cad0a6a6ddab97a7, type: 3}
-  spawnTimer: 10000
+  warrior: {fileID: 412929917298330939, guid: b61a5673c82991140b667753c4e1a3d4, type: 3}
+  spawnTimer: 500
