@@ -45,12 +45,14 @@ public sealed class GameController : MonoBehaviour
 
     public void addPlayer(Player p) {
         players.Add(p.gameObject);
+        mainCamera.GetComponent<GameCamera>().addTarget(p);
     }
 
     public void playerDeath(Player p) {
         players.Remove(p.gameObject);
+        mainCamera.GetComponent<GameCamera>().removeTarget(p);
         if (players.Count == 0) {
-            Application.Quit();
+            UnityEditor.EditorApplication.isPlaying = false;
         }
     }
 
