@@ -30,7 +30,8 @@ public class RangedEnemy : Enemy
         targetPrevTransform = target.transform.position;
     }
     protected override void prepAttack() {
-        targetTransform += (Vector2) target.transform.position - targetPrevTransform;
+        attackDir = target.transform.position - transform.position;
+        targetTransform += (Vector2)target.transform.position - targetPrevTransform;
         targetPrevTransform = target.transform.position;
     }
     protected override void attack() {

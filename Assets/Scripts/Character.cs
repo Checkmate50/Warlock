@@ -8,6 +8,16 @@ public abstract class Character : MovableObject
     protected int maxHealth;
     [SerializeField]
     protected float baseSpeed;
+
+    [SerializeField]
+    protected Sprite moveDown = null;
+    [SerializeField]
+    protected Sprite moveLeft = null;
+    [SerializeField]
+    protected Sprite moveUp = null;
+    [SerializeField]
+    protected Sprite moveRight = null;
+
     protected float speed;
     protected int health;
     protected Vector3 moveDir;
@@ -34,6 +44,16 @@ public abstract class Character : MovableObject
     protected new virtual void Update() {
         base.Update();
         rb.velocity = getVelocity();
+    }
+
+    protected void setSprite(Sprite s)
+    {
+        if (s == null)
+        {
+            //Debug.LogWarning("Will not switch to null sprite for " + gameObject);
+            return;
+        }
+        GetComponent<SpriteRenderer>().sprite = s;
     }
 
     public Vector2 getVelocity() {

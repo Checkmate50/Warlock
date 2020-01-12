@@ -19,15 +19,44 @@ public abstract class Enemy : Character
     protected int restCD = 0;
     protected Character target = null;
     protected Vector3 movement = Vector3.zero;
+    protected Vector2 attackDir = Vector3.zero;
 
     protected enum State { IDLE, MOVE, ATTACK, REST };
     protected State curState;
 
-    protected abstract void move();
+    protected virtual void setMoveSprite()
+    {
+        float moveAngle = Mathf.Atan2(moveDir.y, moveDir.x);
+        if (moveAngle < Mathf.PI / 4f && moveAngle > -Mathf.PI / 4f)
+            setSprite(moveRight);
+        else if (moveAngle < Mathf.PI * 3f / 4f && moveAngle > Mathf.PI / 4f)
+            setSprite(moveUp);
+        else if (moveAngle > -Mathf.PI * 3f / 4f && moveAngle < -Mathf.PI / 4f)
+            setSprite(moveDown);
+        else
+            setSprite(moveLeft);
+    }
+    protected virtual void setAttackSprite()
+    {
+        float attackAngle = Mathf.Atan2(attackDir.y, attackDir.x);
+        if (attackAngle < Mathf.PI / 4f && attackAngle > -Mathf.PI / 4f)
+            setSprite(moveRight);
+        else if (attackAngle < Mathf.PI * 3f / 4f && attackAngle > Mathf.PI / 4f)
+            setSprite(moveUp);
+        else if (attackAngle > -Mathf.PI * 3f / 4f && attackAngle < -Mathf.PI / 4f)
+            setSprite(moveDown);
+        else
+            setSprite(moveLeft);
+    }
+
     protected abstract void attack();
+    protected abstract void move();
     protected virtual void prepAttack() { }
     protected virtual void startMove() { restartMoving(); }
-    protected virtual void startAttack() { stopMoving(); }
+    protected virtual void startAttack() {
+        attackDir = moveDir;
+        stopMoving();
+    }
 
     protected override void Start() {
         base.Start();
@@ -36,7 +65,6 @@ public abstract class Enemy : Character
 
     protected override void Update() {
         base.Update();
-        Debug.Log(attackCD);
         if (curState == State.IDLE)
             checkTarget();
         if (curState == State.MOVE)
@@ -77,6 +105,7 @@ public abstract class Enemy : Character
             startAttack();
         } else {
             attackCD -= 1;
+            setMoveSprite();
             move();
         }
         
@@ -86,9 +115,11 @@ public abstract class Enemy : Character
         if (attackAnimCD == 0) {
             attack();
             restCD = restTime;
+            moveDir = attackDir;
             curState = State.REST;
         } else {
             attackAnimCD -= 1;
+            setAttackSprite();
             prepAttack();
         }
     }

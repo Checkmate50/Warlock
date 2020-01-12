@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 3933464542646599300}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -72,8 +72,8 @@ SpriteRenderer:
   m_SortingLayerID: 569067031
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ed73d9dcfcf6ee04f9c11cfa18950c2e, type: 3}
-  m_Color: {r: 0.9056604, g: 0.17515129, b: 0.17515129, a: 1}
+  m_Sprite: {fileID: 21300000, guid: b2826517565f1ac45840e44d3b774172, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -103,7 +103,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &3933464542646599311
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -134,12 +134,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 2
   baseSpeed: 1
+  moveDown: {fileID: 21300000, guid: b2826517565f1ac45840e44d3b774172, type: 3}
+  moveLeft: {fileID: 21300000, guid: 70c7cb6d1e894d64b8084b2b39ef089d, type: 3}
+  moveUp: {fileID: 21300000, guid: 2aa919e6ce10963409c03f26bd1bd33a, type: 3}
+  moveRight: {fileID: 21300000, guid: 3747c148fda7d704a9ea5680108d7686, type: 3}
   moveTime: 30
   attackTime: 50
   restTime: 0
   aggroRadius: 10
   projectile: {fileID: 4439601716998303368, guid: ef3c92df8eb39bf4998d2e69c8329140,
-    type: 3}
-  projectile2: {fileID: 4516447133605192771, guid: 71b76bc7e8b619146a353ec899c429d8,
     type: 3}
   closeDistance: 3

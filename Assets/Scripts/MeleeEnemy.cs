@@ -28,7 +28,7 @@ public class MeleeEnemy : Enemy
 
     protected bool tryAttack(float angle)
     {
-        Vector2 rayAngle = Quaternion.Euler(0, 0, angle) * moveDir;
+        Vector2 rayAngle = Quaternion.Euler(0, 0, angle) * attackDir;
         foreach (RaycastHit2D result in Physics2D.RaycastAll(transform.position, rayAngle, attackRange)) {
             Player other = result.collider.GetComponent<Player>();
             if (other)
@@ -41,7 +41,6 @@ public class MeleeEnemy : Enemy
     }
     protected override void attack()
     {
-        Debug.Log("attack");
         for (float angle = -attackAngle; angle < attackAngle; angle += attackAngle / 20f)
             if (tryAttack(angle))
                 break;
